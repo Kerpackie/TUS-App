@@ -1,0 +1,133 @@
+﻿@using TUSTimetableApp.Data
+@using TUSTimetableApp
+<div>
+    <img alt="TUS Logo" src="/tuslogo.png" class="align-content-center margin" /> <p></p>
+</div>
+
+<div>
+    <div>
+        <select class="form-control buffer" @bind="currentGroup">
+            <option value="Group A">Group A</option>
+            <option value="Group B">Group B</option>
+
+        </select>
+    </div>
+    <p></p>
+    <div>
+        <select class="form-control" @bind="currentDayOfWeek">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select>
+    </div>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Subject</th>
+                    <th>Type</th>
+                    <th>Room</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var timetable in timetables
+                .Where(x => x.Group == currentGroup)
+                .Where(tt => tt.DayOfWeek == currentDayOfWeek))
+                {
+                    <tr>
+                        <td>@timetable.StartTime - @timetable.EndTime</td>
+                        <td>@timetable.Subject</td>
+                        <td>@timetable.LectureType</td>
+                        <td>@timetable.Room</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+
+    private const string GROUP_A = "Group A";
+    private const string GROUP_B = "Group B";
+
+    private const string MON = "Monday";
+    private const string TUES = "Tuesday";
+    private const string WEDS = "Wednesday";
+    private const string THURS = "Thursday";
+    private const string FRI = "Friday";
+
+    private const string LECTURE = "Lecture";
+    private const string LAB = "Lab";
+    private const string TUT = "Tutorial";
+    private const string PRACT = "Practical";
+
+    private const string DDAP = @"Data Design and Programming";
+    private const string MATH = "Discrete Mathematics";
+    private const string OOP = "Object Oriented Theory and Programming";
+    private const string ALGO = "Data Structures and Algorithms";
+    private const string SDEV = "Software Development";
+    private const string NET = "Network Fundamentals";
+
+
+    private string currentDayOfWeek = MON;
+    private string currentGroup = GROUP_A;
+    private static List<Timetable> timetables = new List<Timetable>
+    {
+        new Timetable(GROUP_A, MON, "11:00", "13:00", DDAP, "8A106", LAB),
+        new Timetable(GROUP_A, MON, "13:00", "14:00", "Break", "", ""),
+        new Timetable(GROUP_A, MON, "14:00", "16:00", MATH, "3B05", LECTURE),
+
+        new Timetable(GROUP_A, TUES, "09:00", "11:00", OOP, "8A106", LAB),
+        new Timetable(GROUP_A, TUES, "11:00", "12:00", MATH, "8A505", TUT),
+        new Timetable(GROUP_A, TUES, "12:00", "14:00", "Break", "", ""),
+        new Timetable(GROUP_A, TUES, "14:00", "16:00", ALGO, "3B05", LECTURE),
+
+        new Timetable(GROUP_A, WEDS, "09:00", "11:00", SDEV, "3A03", LECTURE),
+        new Timetable(GROUP_A, WEDS, "11:00", "12:00", "Break", "", ""),
+        new Timetable(GROUP_A, WEDS, "12:00", "13:00", NET, "3B05", ""),
+        new Timetable(GROUP_A, WEDS, "13:00", "14:00", "Break", "", ""),
+        new Timetable(GROUP_A, WEDS, "14:00", "16:00", OOP, "8A103", PRACT),
+        new Timetable(GROUP_A, WEDS, "16:00", "18:00", DDAP, "8A106", LAB),
+
+        new Timetable(GROUP_A, THURS, "09:00", "10:00", NET, "8A103", LAB),
+        new Timetable(GROUP_A, THURS, "10:00", "11:00", MATH, "1A16", PRACT),
+        new Timetable(GROUP_A, THURS, "11:00", "13:00", ALGO, "1A16", PRACT),
+
+        new Timetable(GROUP_A, FRI, "09:00", "10:00", SDEV, "8A106", LAB),
+        new Timetable(GROUP_A, FRI, "10:00", "11:00", SDEV, "8A106", PRACT),
+        new Timetable(GROUP_A, FRI, "11:00", "13:00", NET, "8A103", PRACT),
+
+        // GROUP B
+
+        new Timetable(GROUP_B, MON, "09:00", "11:00", DDAP, "8A106", LAB),
+        new Timetable(GROUP_B, MON, "11:00", "12:00", MATH, "8A505", TUT),
+        new Timetable(GROUP_B, MON, "12:00", "14:00", "Break", "", ""),
+        new Timetable(GROUP_B, MON, "14:00", "16:00", MATH, "3B05", LECTURE),
+
+        new Timetable(GROUP_B, TUES, "11:00", "13:00", OOP, "8A106", LAB),
+        new Timetable(GROUP_B, TUES, "13:00", "14:00", "Break", "", ""),
+        new Timetable(GROUP_B, TUES, "14:00", "16:00", ALGO, "3B05", LECTURE),
+
+        new Timetable(GROUP_B, WEDS, "09:00", "11:00", SDEV, "3A03", LECTURE),
+        new Timetable(GROUP_B, WEDS, "11:00", "12:00", "Break", "", ""),
+        new Timetable(GROUP_B, WEDS, "12:00", "13:00", NET, "3B05", ""),
+        new Timetable(GROUP_B, WEDS, "13:00", "14:00", "Break", "", ""),
+        new Timetable(GROUP_B, WEDS, "14:00", "16:00", DDAP, "8A106", LAB),
+        new Timetable(GROUP_B, WEDS, "16:00", "18:00", OOP, "8A103", PRACT),
+
+        new Timetable(GROUP_B, THURS, "09:00", "10:00", MATH, "1A16", PRACT),
+        new Timetable(GROUP_B, THURS, "10:00", "11:00", NET, "1A16", LAB),
+        new Timetable(GROUP_B, THURS, "11:00", "14:00", ALGO, "1A16", PRACT),
+
+        new Timetable(GROUP_B, FRI, "09:00", "11:00", NET, "8A103", PRACT),
+        new Timetable(GROUP_B, FRI, "11:00", "12:00", SDEV, "8A106", LAB),
+        new Timetable(GROUP_B, FRI, "12:00", "13:00", SDEV, "8A106", PRACT),
+
+    };
+
+}
