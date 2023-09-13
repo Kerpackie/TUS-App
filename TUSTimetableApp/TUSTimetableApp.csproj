@@ -33,6 +33,12 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
       <AndroidPackageFormat>apk</AndroidPackageFormat>
+      <DebugSymbols>False</DebugSymbols>
+      <AndroidKeyStore>False</AndroidKeyStore>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
+      <AndroidKeyStore>False</AndroidKeyStore>
     </PropertyGroup>
 
     <ItemGroup>
